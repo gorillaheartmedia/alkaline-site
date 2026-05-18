@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TESTING QQQQ111 | Alkaline</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 18% 58%, rgba(94, 10, 88, 0.5), transparent 29%),
+        radial-gradient(circle at 72% 28%, rgba(13, 24, 105, 0.54), transparent 31%),
+        linear-gradient(115deg, #080b15 0%, #050509 48%, #100316 100%);
+      color: #fff;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 22px 7vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      background: linear-gradient(to bottom, rgba(7, 7, 11, 0.88), rgba(7, 7, 11, 0));
+    }
+    nav h2 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+    nav h2::before {
+      content: "\1F736";
+      display: inline-block;
+      width: 1.15em;
+      margin-right: 9px;
+      font-size: 1.25rem;
+      line-height: 1;
+      text-align: center;
+      text-shadow: 0 0 18px rgba(216, 67, 201, 0.75);
+      vertical-align: -2px;
+    }
+    nav a {
+      color: rgba(255, 255, 255, 0.72);
+      text-decoration: none;
+      margin-left: 26px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    nav a:hover,
+    nav a.active { color: #fff; }
+    main {
+      min-height: 100vh;
+      padding: 150px 7vw 90px;
+    }
+    .article-shell {
+      max-width: 980px;
+    }
+    .label {
+      color: #97dcff;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 960px;
+      margin-top: 22px;
+      font-size: clamp(3.2rem, 8.8vw, 9rem);
+      line-height: 0.86;
+      text-transform: uppercase;
+      color: rgba(151, 220, 255, 0.18);
+      -webkit-text-fill-color: rgba(151, 220, 255, 0.18);
+      -webkit-text-stroke: 2px rgba(151, 220, 255, 0.94);
+      text-shadow: 0 20px 48px rgba(50, 148, 255, 0.3);
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+      color: rgba(255, 255, 255, 0.56);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .article-image {
+      display: block;
+      width: min(100%, 780px);
+      max-height: 420px;
+      margin-top: 44px;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #000;
+    }
+    .article-body {
+      max-width: 780px;
+      margin-top: 54px;
+      padding: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.055);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 26px 70px rgba(0, 0, 0, 0.34);
+    }
+    .article-body p {
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 1.06rem;
+      line-height: 1.82;
+    }
+    .article-body p + p {
+      margin-top: 24px;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      margin-top: 34px;
+      padding: 0 20px;
+      border: 1px solid rgba(151, 220, 255, 0.42);
+      background: rgba(151, 220, 255, 0.1);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .back-link:hover {
+      border-color: rgba(151, 220, 255, 0.82);
+      background: rgba(151, 220, 255, 0.18);
+    }
+    @media (max-width: 700px) {
+      nav { position: absolute; align-items: flex-start; flex-direction: column; gap: 14px; padding: 18px 5vw; }
+      nav a { margin: 0 16px 0 0; }
+      main { padding: 132px 5vw 64px; }
+      .article-body { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <h2><a href="index.html" style="color: inherit; text-decoration: none;">Alkaline</a></h2>
+    <div>
+      <a class="active" href="readings.html">Readings</a>
+      <a href="book-reviews.html">Book Reviews</a>
+      <a href="videos.html">Videos</a>
+      <a href="programs.html">Programs</a>
+    </div>
+  </nav>
+
+  <main>
+    <article class="article-shell">
+      <span class="label">Field Note</span>
+      <h1>TESTING QQQQ111</h1>
+      <div class="meta">
+        <span>May 2026</span>
+        <span>11 minute read</span>
+        <span>Media</span>
+        <span>Culture</span>
+        <span>Philosophy</span>
+      </div>
+
+      <div class="article-body">
+        <p>Paste each paragraph on its own line.</p>
+      </div>
+
+      <a class="back-link" href="readings.html">Back to Readings</a>
+    </article>
+  </main>
+</body>
+</html>
