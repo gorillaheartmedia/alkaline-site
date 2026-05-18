@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Post Editor | Alkaline</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 18% 58%, rgba(94, 10, 88, 0.5), transparent 29%),
+        radial-gradient(circle at 72% 28%, rgba(13, 24, 105, 0.54), transparent 31%),
+        linear-gradient(115deg, #080b15 0%, #050509 48%, #100316 100%);
+      color: #fff;
+    }
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 22px 7vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(7, 7, 11, 0.86);
+      backdrop-filter: blur(14px);
+    }
+    nav h2 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+    nav h2::before {
+      content: "\1F736";
+      display: inline-block;
+      width: 1.15em;
+      margin-right: 9px;
+      font-size: 1.25rem;
+      line-height: 1;
+      text-align: center;
+      text-shadow: 0 0 18px rgba(216, 67, 201, 0.75);
+      vertical-align: -2px;
+    }
+    nav a {
+      color: rgba(255, 255, 255, 0.72);
+      text-decoration: none;
+      margin-left: 24px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    nav a:hover { color: #fff; }
+    main {
+      padding: 70px 7vw 90px;
+    }
+    .page-title {
+      max-width: 1040px;
+      font-size: clamp(3rem, 8vw, 8rem);
+      line-height: 0.86;
+      text-transform: uppercase;
+      color: rgba(151, 220, 255, 0.18);
+      -webkit-text-fill-color: rgba(151, 220, 255, 0.18);
+      -webkit-text-stroke: 2px rgba(151, 220, 255, 0.94);
+      text-shadow: 0 20px 48px rgba(50, 148, 255, 0.3);
+    }
+    .intro {
+      max-width: 760px;
+      margin-top: 24px;
+      color: rgba(255, 255, 255, 0.72);
+      line-height: 1.7;
+    }
+    .editor-grid {
+      display: grid;
+      grid-template-columns: minmax(320px, 0.9fr) minmax(360px, 1.1fr);
+      gap: 22px;
+      margin-top: 48px;
+      align-items: start;
+    }
+    form,
+    .panel {
+      padding: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.055);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 26px 70px rgba(0, 0, 0, 0.34);
+    }
+    label {
+      display: block;
+      margin-top: 18px;
+      color: rgba(255, 255, 255, 0.64);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    label:first-child { margin-top: 0; }
+    input,
+    textarea,
+    select {
+      width: 100%;
+      margin-top: 8px;
+      padding: 13px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(0, 0, 0, 0.36);
+      color: #fff;
+      font: inherit;
+    }
+    textarea {
+      min-height: 220px;
+      resize: vertical;
+      line-height: 1.55;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+    button,
+    .button-link {
+      min-height: 42px;
+      padding: 0 18px;
+      border: 1px solid rgba(151, 220, 255, 0.42);
+      background: rgba(151, 220, 255, 0.1);
+      color: #fff;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    button:hover,
+    .button-link:hover {
+      border-color: rgba(151, 220, 255, 0.82);
+      background: rgba(151, 220, 255, 0.18);
+    }
+    .preview h2,
+    .output h2 {
+      font-size: clamp(1.8rem, 4vw, 3.4rem);
+      line-height: 0.92;
+      text-transform: uppercase;
+    }
+    .preview-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .preview img {
+      width: 100%;
+      max-height: 280px;
+      margin-top: 24px;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #000;
+    }
+    .preview-body {
+      margin-top: 24px;
+      color: rgba(255, 255, 255, 0.76);
+      line-height: 1.78;
+    }
+    .preview-body p + p { margin-top: 18px; }
+    .output {
+      margin-top: 22px;
+    }
+    .output textarea {
+      min-height: 170px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.82rem;
+    }
+    .hint {
+      margin-top: 12px;
+      color: rgba(255, 255, 255, 0.52);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .status {
+      margin-top: 14px;
+      color: #97dcff;
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      min-height: 1.2em;
+    }
+    @media (max-width: 900px) {
+      nav { align-items: flex-start; flex-direction: column; gap: 14px; padding: 18px 5vw; }
+      nav a { margin: 0 16px 0 0; }
+      main { padding: 50px 5vw 70px; }
+      .editor-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <h2><a href="index.html" style="color: inherit; text-decoration: none;">Alkaline</a></h2>
+    <div>
+      <a href="readings.html">Readings</a>
+      <a href="readings-archive.html">Archive</a>
+      <a href="index.html">Landing</a>
+    </div>
+  </nav>
+
+  <main>
+    <h1 class="page-title">Post Editor</h1>
+    <p class="intro">
+      Compose a reading post, preview it, then generate the article file and the snippets used by
+      the readings list and archive.
+    </p>
+
+    <div class="editor-grid">
+      <form id="post-form">
+        <label for="post-select">Existing Posts</label>
+        <select id="post-select">
+          <option value="">New post</option>
+        </select>
+
+        <div class="controls">
+          <button type="button" id="load-post">Load Post</button>
+          <button type="button" id="save-post">Save / Update Site</button>
+          <button type="button" id="delete-post">Delete Post</button>
+        </div>
+
+        <label for="title">Title</label>
+        <input id="title" value="Against Passive Media" />
+
+        <label for="slug">Slug / File Name</label>
+        <input id="slug" value="against-passive-media" />
+
+        <label for="date">Date</label>
+        <input id="date" value="May 2026" />
+
+        <label for="read-time">Read Time</label>
+        <input id="read-time" value="11 minute read" />
+
+        <label for="category">Category</label>
+        <select id="category">
+          <option>Essay</option>
+          <option selected>Field Note</option>
+          <option>Reading</option>
+          <option>Experiment</option>
+          <option>Research Note</option>
+        </select>
+
+        <label for="tags">Tags</label>
+        <input id="tags" value="media, culture, philosophy" />
+
+        <label for="image">Image Path</label>
+        <input id="image" placeholder="images/example.jpg" />
+
+        <label for="excerpt">Preview / Excerpt</label>
+        <textarea id="excerpt">A short reflection on why media should invite participation, tension, and interpretation rather than passive consumption.</textarea>
+
+        <label for="paragraphs">Paragraphs</label>
+        <textarea id="paragraphs">Paste each paragraph on its own line.</textarea>
+
+        <div class="controls">
+          <button type="button" id="generate">Generate</button>
+          <button type="button" id="download">Download Article HTML</button>
+        </div>
+        <p class="hint">
+          Open this page from the local admin server to save, update, load, or delete posts directly.
+          The download button is only a fallback for browser-only use.
+        </p>
+        <p class="status" id="status" aria-live="polite"></p>
+      </form>
+
+      <div>
+        <section class="panel preview" aria-live="polite">
+          <h2 id="preview-title">Against Passive Media</h2>
+          <div class="preview-meta">
+            <span id="preview-date">May 2026</span>
+            <span id="preview-time">11 minute read</span>
+            <span id="preview-category">Field Note</span>
+          </div>
+          <img id="preview-image" src="" alt="" hidden />
+          <div class="preview-body" id="preview-body">
+            <p>Paste each paragraph on its own line.</p>
+          </div>
+        </section>
+
+        <section class="panel output">
+          <h2>Generated Code</h2>
+
+          <label for="article-output">Article HTML</label>
+          <textarea id="article-output" readonly></textarea>
+
+          <label for="recent-output">Recent Post Entry</label>
+          <textarea id="recent-output" readonly></textarea>
+
+          <label for="archive-output">Archive Entry</label>
+          <textarea id="archive-output" readonly></textarea>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const fields = {
+      postSelect: document.querySelector("#post-select"),
+      title: document.querySelector("#title"),
+      slug: document.querySelector("#slug"),
+      date: document.querySelector("#date"),
+      readTime: document.querySelector("#read-time"),
+      category: document.querySelector("#category"),
+      tags: document.querySelector("#tags"),
+      image: document.querySelector("#image"),
+      excerpt: document.querySelector("#excerpt"),
+      paragraphs: document.querySelector("#paragraphs")
+    };
+
+    const outputs = {
+      article: document.querySelector("#article-output"),
+      recent: document.querySelector("#recent-output"),
+      archive: document.querySelector("#archive-output")
+    };
+    const status = document.querySelector("#status");
+
+    const escapeHtml = (value) => String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+
+    function slugify(value) {
+      return value
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+    }
+
+    function getPost() {
+      const title = fields.title.value.trim() || "Untitled Reading";
+      const slug = slugify(fields.slug.value || title);
+      const tags = fields.tags.value
+        .split(",")
+        .map((tag) => tag.trim().toLowerCase())
+        .filter(Boolean);
+      const paragraphs = fields.paragraphs.value
+        .split(/\n+/)
+        .map((paragraph) => paragraph.trim())
+        .filter(Boolean);
+
+      return {
+        title,
+        slug,
+        fileName: `${slug}.html`,
+        date: fields.date.value.trim() || "Undated",
+        readTime: fields.readTime.value.trim() || "5 minute read",
+        category: fields.category.value,
+        tags,
+        image: fields.image.value.trim(),
+        excerpt: fields.excerpt.value.trim(),
+        paragraphs
+      };
+    }
+
+    function setPost(post) {
+      fields.title.value = post.title || "";
+      fields.slug.value = post.slug || slugify(post.title || "");
+      fields.slug.dataset.touched = "true";
+      fields.date.value = post.date || "";
+      fields.readTime.value = post.readTime || "";
+      fields.category.value = post.category || "Essay";
+      fields.tags.value = Array.isArray(post.tags) ? post.tags.join(", ") : "";
+      fields.image.value = post.image || "";
+      fields.excerpt.value = post.excerpt || "";
+      fields.paragraphs.value = Array.isArray(post.paragraphs) ? post.paragraphs.join("\n\n") : "";
+      generate();
+    }
+
+    function buildArticle(post) {
+      const imageMarkup = post.image
+        ? `\n        <img src="${escapeHtml(post.image)}" alt="${escapeHtml(post.title)}" />\n`
+        : "";
+      const paragraphs = post.paragraphs
+        .map((paragraph) => `        <p>${escapeHtml(paragraph)}</p>`)
+        .join("\n\n");
+
+      return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${escapeHtml(post.title)} | Alkaline</title>
+</head>
+<body>
+  <main>
+    <article>
+      <p>${escapeHtml(post.category)} | ${escapeHtml(post.date)} | ${escapeHtml(post.readTime)}</p>
+      <h1>${escapeHtml(post.title)}</h1>${imageMarkup}
+${paragraphs}
+    </article>
+  </main>
+</body>
+</html>`;
+    }
+
+    function buildRecentEntry(post) {
+      return `<a class="post-link" href="${post.fileName}" data-url="${post.fileName}" data-tags="${post.tags.join(" ")}" data-title="${escapeHtml(post.title)}" data-type="${escapeHtml(post.category)}" data-time="${escapeHtml(post.readTime)}" data-preview="${escapeHtml(post.excerpt)}">
+  <span>${escapeHtml(post.category)}</span>
+  <strong>${escapeHtml(post.title)}</strong>
+</a>`;
+    }
+
+    function buildArchiveEntry(post) {
+      return `<a class="archive-link" href="${post.fileName}"><span>${escapeHtml(post.date)}</span><strong>${escapeHtml(post.title)}</strong><span>${escapeHtml(post.readTime.replace("ute read", ""))}</span></a>`;
+    }
+
+    function updatePreview(post) {
+      document.querySelector("#preview-title").textContent = post.title;
+      document.querySelector("#preview-date").textContent = post.date;
+      document.querySelector("#preview-time").textContent = post.readTime;
+      document.querySelector("#preview-category").textContent = post.category;
+
+      const image = document.querySelector("#preview-image");
+      if (post.image) {
+        image.src = post.image;
+        image.alt = post.title;
+        image.hidden = false;
+      } else {
+        image.hidden = true;
+      }
+
+      document.querySelector("#preview-body").innerHTML = post.paragraphs.length
+        ? post.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")
+        : `<p>${escapeHtml(post.excerpt || "No preview text yet.")}</p>`;
+    }
+
+    function generate() {
+      const post = getPost();
+      fields.slug.value = post.slug;
+      updatePreview(post);
+      outputs.article.value = buildArticle(post);
+      outputs.recent.value = buildRecentEntry(post);
+      outputs.archive.value = buildArchiveEntry(post);
+      const time = new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit", second: "2-digit" });
+      status.textContent = `Generated ${post.fileName} at ${time}`;
+      return post;
+    }
+
+    document.querySelector("#generate").addEventListener("click", generate);
+
+    document.querySelector("#download").addEventListener("click", () => {
+      const post = generate();
+      const blob = new Blob([outputs.article.value], { type: "text/html" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = post.fileName;
+      link.click();
+      URL.revokeObjectURL(url);
+    });
+
+    async function api(path, options = {}) {
+      const response = await fetch(path, {
+        headers: { "Content-Type": "application/json" },
+        ...options
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || "Request failed.");
+      }
+      return data;
+    }
+
+    async function loadPostList() {
+      try {
+        const data = await api("/api/posts");
+        const currentSlug = fields.slug.value;
+        fields.postSelect.innerHTML = '<option value="">New post</option>';
+        data.posts.forEach((post) => {
+          const option = document.createElement("option");
+          option.value = post.slug;
+          option.textContent = post.title || post.slug;
+          fields.postSelect.append(option);
+        });
+        fields.postSelect.value = currentSlug && data.posts.some((post) => post.slug === currentSlug) ? currentSlug : "";
+        status.textContent = "Connected to local editor server.";
+      } catch (error) {
+        status.textContent = "File editing is offline. Run node admin-server.js and open http://localhost:4321/editor.html.";
+      }
+    }
+
+    document.querySelector("#load-post").addEventListener("click", async () => {
+      const slug = fields.postSelect.value || fields.slug.value;
+      if (!slug) {
+        status.textContent = "Choose a post to load.";
+        return;
+      }
+
+      try {
+        const data = await api(`/api/posts/${encodeURIComponent(slug)}`);
+        setPost(data.post);
+        status.textContent = `Loaded ${data.post.fileName}`;
+      } catch (error) {
+        status.textContent = error.message;
+      }
+    });
+
+    document.querySelector("#save-post").addEventListener("click", async () => {
+      try {
+        const post = generate();
+        const data = await api("/api/posts", {
+          method: "POST",
+          body: JSON.stringify(post)
+        });
+        fields.postSelect.value = data.post.slug;
+        await loadPostList();
+        status.textContent = data.message;
+      } catch (error) {
+        status.textContent = error.message;
+      }
+    });
+
+    document.querySelector("#delete-post").addEventListener("click", async () => {
+      const slug = fields.postSelect.value || fields.slug.value;
+      if (!slug) {
+        status.textContent = "Choose a post to delete.";
+        return;
+      }
+
+      if (!confirm(`Delete ${slug}.html and remove it from the readings pages?`)) {
+        return;
+      }
+
+      try {
+        const data = await api(`/api/posts/${encodeURIComponent(slug)}`, { method: "DELETE" });
+        fields.postSelect.value = "";
+        await loadPostList();
+        status.textContent = data.message;
+      } catch (error) {
+        status.textContent = error.message;
+      }
+    });
+
+    fields.title.addEventListener("input", () => {
+      if (!fields.slug.dataset.touched) {
+        fields.slug.value = slugify(fields.title.value);
+      }
+    });
+
+    fields.slug.addEventListener("input", () => {
+      fields.slug.dataset.touched = "true";
+    });
+
+    Object.values(fields).forEach((field) => {
+      field.addEventListener("input", generate);
+      field.addEventListener("change", generate);
+    });
+
+    fields.postSelect.addEventListener("change", () => {
+      if (fields.postSelect.value) {
+        document.querySelector("#load-post").click();
+      }
+    });
+
+    generate();
+    loadPostList();
+  </script>
+</body>
+</html>

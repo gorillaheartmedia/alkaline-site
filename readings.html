@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Readings | Alkaline</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 18% 58%, rgba(94, 10, 88, 0.5), transparent 29%),
+        radial-gradient(circle at 72% 28%, rgba(13, 24, 105, 0.54), transparent 31%),
+        linear-gradient(115deg, #080b15 0%, #050509 48%, #100316 100%);
+      color: #fff;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 22px 7vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      background: linear-gradient(to bottom, rgba(7, 7, 11, 0.86), rgba(7, 7, 11, 0));
+    }
+    nav h2 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+    nav h2::before {
+      content: "🜶";
+      display: inline-block;
+      width: 1.15em;
+      margin-right: 9px;
+      font-size: 1.25rem;
+      line-height: 1;
+      text-align: center;
+      text-shadow: 0 0 18px rgba(216, 67, 201, 0.75);
+      vertical-align: -2px;
+    }
+    nav a {
+      color: rgba(255, 255, 255, 0.72);
+      text-decoration: none;
+      margin-left: 26px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    nav a:hover,
+    nav a.active { color: #fff; }
+    main {
+      min-height: 100vh;
+      padding: 150px 7vw 80px;
+    }
+    .page-title {
+      max-width: 920px;
+      font-size: clamp(4rem, 11vw, 11rem);
+      line-height: 0.84;
+      text-transform: uppercase;
+      color: rgba(151, 220, 255, 0.18);
+      -webkit-text-fill-color: rgba(151, 220, 255, 0.18);
+      -webkit-text-stroke: 2px rgba(151, 220, 255, 0.94);
+      text-shadow: 0 20px 48px rgba(50, 148, 255, 0.3);
+    }
+    .intro {
+      max-width: 760px;
+      margin-top: 34px;
+      color: rgba(255, 255, 255, 0.74);
+      font-size: 1.08rem;
+      line-height: 1.7;
+    }
+    .latest {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+      gap: 22px;
+      margin-top: 54px;
+      align-items: stretch;
+    }
+    .feature,
+    .preview,
+    .archive-panel {
+      padding: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.055);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 26px 70px rgba(0, 0, 0, 0.34);
+    }
+    .label {
+      color: #97dcff;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .feature h2 {
+      max-width: 780px;
+      margin-top: 22px;
+      font-size: clamp(2.4rem, 5.8vw, 5.6rem);
+      line-height: 0.9;
+      text-transform: uppercase;
+    }
+    .feature p,
+    .preview p,
+    .archive-panel p {
+      margin-top: 18px;
+      color: rgba(255, 255, 255, 0.68);
+      line-height: 1.6;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+      color: rgba(255, 255, 255, 0.56);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .page-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      margin-top: 28px;
+      padding: 0 20px;
+      border: 1px solid rgba(151, 220, 255, 0.42);
+      background: rgba(151, 220, 255, 0.1);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .latest-side {
+      display: grid;
+      align-content: end;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at 30% 28%, rgba(216, 67, 201, 0.32), transparent 34%),
+        linear-gradient(135deg, rgba(151, 220, 255, 0.1), rgba(255, 255, 255, 0.035));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 30px;
+    }
+    .latest-side strong {
+      display: block;
+      font-size: clamp(3.5rem, 8vw, 7.4rem);
+      line-height: 0.82;
+      text-transform: uppercase;
+      color: rgba(151, 220, 255, 0.18);
+      -webkit-text-fill-color: rgba(151, 220, 255, 0.18);
+      -webkit-text-stroke: 2px rgba(151, 220, 255, 0.94);
+    }
+    .recent {
+      margin-top: 86px;
+    }
+    .tag-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .tag-button {
+      min-height: 36px;
+      padding: 0 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.045);
+      color: rgba(255, 255, 255, 0.72);
+      cursor: pointer;
+      font-size: 0.72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .tag-button:hover,
+    .tag-button.active {
+      border-color: rgba(151, 220, 255, 0.58);
+      background: rgba(151, 220, 255, 0.14);
+      color: #fff;
+    }
+    .section-heading {
+      font-size: clamp(2rem, 5vw, 4.6rem);
+      line-height: 0.92;
+      text-transform: uppercase;
+    }
+    .recent-layout {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.78fr) minmax(320px, 1.22fr);
+      gap: 22px;
+      margin-top: 30px;
+      align-items: start;
+    }
+    .post-list {
+      display: grid;
+      gap: 10px;
+    }
+    .post-link {
+      display: block;
+      width: 100%;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.045);
+      color: rgba(255, 255, 255, 0.72);
+      text-decoration: none;
+      text-align: left;
+      cursor: pointer;
+    }
+    .post-link:hover,
+    .post-link.active {
+      border-color: rgba(151, 220, 255, 0.5);
+      background: rgba(151, 220, 255, 0.12);
+      color: #fff;
+    }
+    .post-link span {
+      display: block;
+      color: rgba(255, 255, 255, 0.46);
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .post-link strong {
+      display: block;
+      margin-top: 7px;
+      font-size: 1rem;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+    .post-link[hidden] {
+      display: none;
+    }
+    .preview {
+      position: sticky;
+      top: 110px;
+      min-height: 380px;
+    }
+    .preview h3 {
+      margin-top: 18px;
+      font-size: clamp(2rem, 4.4vw, 4.4rem);
+      line-height: 0.92;
+      text-transform: uppercase;
+    }
+    .archive-panel {
+      margin-top: 86px;
+      max-width: 900px;
+    }
+    @media (max-width: 700px) {
+      nav { position: absolute; align-items: flex-start; flex-direction: column; gap: 14px; padding: 18px 5vw; }
+      nav a { margin: 0 16px 0 0; }
+      main { padding: 132px 5vw 64px; }
+      .latest,
+      .recent-layout { grid-template-columns: 1fr; }
+      .preview { position: static; min-height: auto; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <h2><a href="index.html" style="color: inherit; text-decoration: none;">Alkaline</a></h2>
+    <div>
+      <a class="active" href="readings.html">Readings</a>
+      <a href="book-reviews.html">Book Reviews</a>
+      <a href="videos.html">Videos</a>
+      <a href="programs.html">Programs</a>
+    </div>
+  </nav>
+
+  <main>
+    <h1 class="page-title">Readings</h1>
+    <p class="intro">
+      Essays, field notes, and short-form reflections exploring design, media, culture,
+      experimentation, and the systems that shape how people think.
+    </p>
+
+    <section class="latest" aria-label="Latest reading">
+      <article class="feature">
+        <span class="label">Latest Installment</span>
+        <h2>Design as a Method for Unsettling the Obvious</h2>
+        <p>
+          A daily highlight on how visual systems, stories, and experiments can interrupt
+          familiar assumptions and open room for sharper public imagination.
+        </p>
+        <div class="meta">
+          <span>Today</span>
+          <span>6 minute read</span>
+          <span>Essay</span>
+        </div>
+        <a class="page-link" href="readings-archive.html">Read Latest</a>
+      </article>
+      <aside class="latest-side" aria-hidden="true">
+        <strong>Latest</strong>
+      </aside>
+    </section>
+
+    <section class="recent" aria-label="Recent posts">
+      <h2 class="section-heading">Recent Posts</h2>
+      <div class="tag-bank" aria-label="Filter readings by category">
+        <button class="tag-button active" type="button" data-tag="all">All</button>
+        <button class="tag-button" type="button" data-tag="design">Design</button>
+        <button class="tag-button" type="button" data-tag="media">Media</button>
+        <button class="tag-button" type="button" data-tag="experiments">Experiments</button>
+        <button class="tag-button" type="button" data-tag="storytelling">Storytelling</button>
+        <button class="tag-button" type="button" data-tag="systems">Systems</button>
+        <button class="tag-button" type="button" data-tag="culture">Culture</button>
+        <button class="tag-button" type="button" data-tag="philosophy">Philosophy</button>
+      </div>
+      <div class="recent-layout">
+        <div class="post-list" role="list">
+          <a class="post-link active" href="test.html" data-url="test.html" data-tags="media culture philosophy" data-title="test" data-type="Field Note" data-time="11 minute read" data-preview="A short reflection on why media should invite participation, tension, and interpretation rather than passive consumption.">
+            <span>Field Note</span>
+            <strong>test</strong>
+          </a>
+          <a class="post-link" href="against-passive-media.html" data-url="against-passive-media.html" data-tags="media culture philosophy" data-title="Against Passive Media" data-type="Field Note" data-time="11 minute read" data-preview="A short reflection on why media should invite participation, tension, and interpretation rather than passive consumption.">
+            <span>Field Note</span>
+            <strong>Against Passive Media</strong>
+          </a>
+          <button class="post-link" type="button" data-url="readings-archive.html" data-tags="design media" data-title="The Shape of Attention" data-type="Essay" data-time="7 minute read" data-preview="How typography, pacing, and contrast influence what people notice first, what they remember, and what they question.">
+            <span>Essay</span>
+            <strong>The Shape of Attention</strong>
+          </button>
+          <button class="post-link" type="button" data-url="readings-archive.html" data-tags="design experiments" data-title="Randomness as a Design Partner" data-type="Experiment" data-time="5 minute read" data-preview="A look at controlled randomness as a way to break default patterns and discover stranger, more useful forms.">
+            <span>Experiment</span>
+            <strong>Randomness as a Design Partner</strong>
+          </button>
+          <button class="post-link" type="button" data-url="readings-archive.html" data-tags="design culture philosophy" data-title="Notes on Visual Pressure" data-type="Reading" data-time="3 minute read" data-preview="Compressed thoughts on scale, density, friction, and the emotional weight of interface decisions.">
+            <span>Reading</span>
+            <strong>Notes on Visual Pressure</strong>
+          </button>
+          <button class="post-link" type="button" data-url="readings-archive.html" data-tags="storytelling media" data-title="Storytelling After the Feed" data-type="Essay" data-time="8 minute read" data-preview="What happens when narrative is designed outside the endless scroll and given structure, sequence, and consequence again.">
+            <span>Essay</span>
+            <strong>Storytelling After the Feed</strong>
+          </button>
+          <button class="post-link" type="button" data-url="readings-archive.html" data-tags="systems experiments" data-title="Systems That Teach Back" data-type="Research Note" data-time="6 minute read" data-preview="A note on tools, environments, and programs that change the user as much as the user changes the work.">
+            <span>Research Note</span>
+            <strong>Systems That Teach Back</strong>
+          </button>
+        </div>
+
+        <article class="preview" aria-live="polite">
+          <span class="label" id="preview-type">Field Note</span>
+          <h3 id="preview-title">test</h3>
+          <p id="preview-copy">
+            A short reflection on why media should invite participation, tension, and interpretation rather than passive consumption.
+          </p>
+          <div class="meta">
+            <span id="preview-time">11 minute read</span>
+            <span>Preview</span>
+          </div>
+          <a class="page-link" id="preview-link" href="test.html">Open Post</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="archive-panel" aria-label="Archive">
+      <span class="label">Archive</span>
+      <h2 class="section-heading">All Readings</h2>
+      <p>
+        Browse the full collection by theme, date, format, or project. Use the archive for older
+        essays, notes, experiments, and reading fragments.
+      </p>
+      <a class="page-link" href="readings-archive.html">Go to Archive</a>
+    </section>
+  </main>
+
+  <script>
+    const postLinks = document.querySelectorAll(".post-link");
+    const tagButtons = document.querySelectorAll(".tag-button");
+    const previewType = document.querySelector("#preview-type");
+    const previewTitle = document.querySelector("#preview-title");
+    const previewCopy = document.querySelector("#preview-copy");
+    const previewTime = document.querySelector("#preview-time");
+    const previewLink = document.querySelector("#preview-link");
+
+    function updatePreview(link) {
+      postLinks.forEach((item) => item.classList.remove("active"));
+      link.classList.add("active");
+      previewType.textContent = link.dataset.type;
+      previewTitle.textContent = link.dataset.title;
+      previewCopy.textContent = link.dataset.preview;
+      previewTime.textContent = link.dataset.time;
+      previewLink.href = link.dataset.url;
+    }
+
+    postLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        updatePreview(link);
+      });
+    });
+
+    tagButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const tag = button.dataset.tag;
+        tagButtons.forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+
+        postLinks.forEach((link) => {
+          const tags = link.dataset.tags.split(" ");
+          link.hidden = tag !== "all" && !tags.includes(tag);
+        });
+
+        const firstVisiblePost = Array.from(postLinks).find((link) => !link.hidden);
+        if (firstVisiblePost) {
+          updatePreview(firstVisiblePost);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
