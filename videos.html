@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Videos | Alkaline</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { min-height: 100vh; font-family: Arial, Helvetica, sans-serif; background: radial-gradient(circle at 18% 58%, rgba(94, 10, 88, 0.5), transparent 29%), radial-gradient(circle at 72% 28%, rgba(13, 24, 105, 0.54), transparent 31%), linear-gradient(115deg, #080b15 0%, #050509 48%, #100316 100%); color: #fff; }
+    nav { position: fixed; top: 0; left: 0; width: 100%; padding: 22px 7vw; display: flex; justify-content: space-between; align-items: center; z-index: 10; background: linear-gradient(to bottom, rgba(7, 7, 11, 0.86), rgba(7, 7, 11, 0)); }
+    nav h2 { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.16em; }
+    nav h2::before { content: "🜶"; display: inline-block; width: 1.15em; margin-right: 9px; font-size: 1.25rem; line-height: 1; text-align: center; text-shadow: 0 0 18px rgba(216, 67, 201, 0.75); vertical-align: -2px; }
+    nav a { color: rgba(255, 255, 255, 0.72); text-decoration: none; margin-left: 26px; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+    nav a:hover, nav a.active { color: #fff; }
+    main { min-height: 100vh; padding: 150px 7vw 80px; }
+    .page-title { max-width: 920px; font-size: clamp(4rem, 11vw, 11rem); line-height: 0.84; text-transform: uppercase; color: rgba(151, 220, 255, 0.18); -webkit-text-fill-color: rgba(151, 220, 255, 0.18); -webkit-text-stroke: 2px rgba(151, 220, 255, 0.94); text-shadow: 0 20px 48px rgba(50, 148, 255, 0.3); }
+    .intro { max-width: 760px; margin-top: 34px; color: rgba(255, 255, 255, 0.74); font-size: 1.08rem; line-height: 1.7; }
+    .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; margin-top: 48px; }
+    .video-card { overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(255, 255, 255, 0.055); box-shadow: 0 26px 70px rgba(0, 0, 0, 0.34); }
+    .video-card video, .video-card iframe { width: 100%; aspect-ratio: 16 / 9; display: block; border: 0; background: #000; }
+    .video-info { padding: 24px; }
+    .video-info h3 { text-transform: uppercase; line-height: 1; }
+    .video-info p { margin-top: 12px; color: rgba(255, 255, 255, 0.68); line-height: 1.6; }
+    @media (max-width: 700px) { nav { position: absolute; align-items: flex-start; flex-direction: column; gap: 14px; padding: 18px 5vw; } nav a { margin: 0 16px 0 0; } main { padding: 132px 5vw 64px; } }
+  </style>
+</head>
+<body>
+  <nav>
+    <h2><a href="index.html" style="color: inherit; text-decoration: none;">Alkaline</a></h2>
+    <div>
+      <a href="readings.html">Readings</a>
+      <a href="book-reviews.html">Book Reviews</a>
+      <a class="active" href="videos.html">Videos</a>
+      <a href="programs.html">Programs</a>
+    </div>
+  </nav>
+  <main>
+    <h1 class="page-title">Videos</h1>
+    <p class="intro">Video essays, experiments, visual studies, and media projects built to provoke thought and invite new ways of seeing.</p>
+    <div class="video-grid">
+      <article class="video-card">
+        <video controls><source src="videos/sample-video.mp4" type="video/mp4">Your browser does not support the video tag.</video>
+        <div class="video-info"><h3>Local Video</h3><p>Replace this source with your own video file.</p></div>
+      </article>
+      <article class="video-card">
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video" allowfullscreen></iframe>
+        <div class="video-info"><h3>Embedded Video</h3><p>Replace this embed with your own YouTube or media link.</p></div>
+      </article>
+    </div>
+  </main>
+</body>
+</html>
