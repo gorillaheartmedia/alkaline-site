@@ -1,0 +1,14 @@
+{
+  "title": "My New Reading",
+  "slug": "my-new-reading",
+  "date": "May 2026",
+  "readTime": "11 minute read",
+  "category": "Essay",
+  "tags": ["media", "culture"],
+  "image": "",
+  "excerpt": "A short summary of the reading that will appear in the readings preview.",
+  "paragraphs": [
+    "Paste the first paragraph of the post here.",
+    "Paste each new paragraph as a separate item in this list. Then run: node generate-post.js"
+  ]
+}

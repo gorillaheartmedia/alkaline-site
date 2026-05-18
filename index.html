@@ -648,46 +648,6 @@
       color: rgba(255, 255, 255, 0.7);
     }
 
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 22px;
-      margin-top: 38px;
-    }
-
-    .video-card {
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.13);
-      background: #0d0d12;
-      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.38);
-    }
-
-    .video-card video,
-    .video-card iframe {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      display: block;
-      border: none;
-      background:
-        linear-gradient(135deg, rgba(216, 67, 201, 0.2), rgba(45, 67, 196, 0.24)),
-        #000;
-    }
-
-    .video-info {
-      padding: 24px;
-    }
-
-    .video-info h3 {
-      color: #ffffff;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-      line-height: 1;
-    }
-
-    .video-info p {
-      color: rgba(255, 255, 255, 0.7);
-    }
-
     footer {
       padding: 34px 7vw 48px;
       color: rgba(255, 255, 255, 0.52);
@@ -739,8 +699,7 @@
         width: min(450px, 78vw);
       }
 
-      .cards,
-      .video-grid {
+      .cards {
         grid-template-columns: 1fr;
       }
 
@@ -923,9 +882,9 @@
       </div>
 
       <div class="card">
-        <h3>Video Ready</h3>
+        <h3>Video Page</h3>
         <p>
-          Add local videos or embedded YouTube videos using simple HTML video or iframe elements.
+          A dedicated video space is under construction for future visual essays and media projects.
         </p>
       </div>
     </div>
@@ -950,42 +909,12 @@
   </section>
 
   <section id="videos">
-    <h2 class="section-title">Video Gallery</h2>
+    <h2 class="section-title">Videos</h2>
     <p class="section-text">
-      Replace the example video paths with your own files or YouTube embeds.
+      The video section is under construction. New visual essays, experiments, and media
+      projects will be added here soon.
     </p>
-    <a class="section-link" href="videos.html">Watch Videos</a>
-
-    <div class="video-grid">
-      <div class="video-card">
-        <video controls>
-          <source src="videos/sample-video.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-
-        <div class="video-info">
-          <h3>Local Video Example</h3>
-          <p>
-            Place your video inside a folder named <strong>videos</strong> and update the file name.
-          </p>
-        </div>
-      </div>
-
-      <div class="video-card">
-        <iframe
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-          title="YouTube video"
-          allowfullscreen>
-        </iframe>
-
-        <div class="video-info">
-          <h3>YouTube Embed Example</h3>
-          <p>
-            Replace the YouTube embed link with your own video link.
-          </p>
-        </div>
-      </div>
-    </div>
+    <a class="section-link" href="videos.html">Visit Video Page</a>
   </section>
 
   <footer>

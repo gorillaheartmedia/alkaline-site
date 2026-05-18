@@ -182,6 +182,15 @@
       font-size: 0.9rem;
       line-height: 1.5;
     }
+    .status {
+      margin-top: 14px;
+      color: #97dcff;
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      min-height: 1.2em;
+    }
     @media (max-width: 900px) {
       nav { align-items: flex-start; flex-direction: column; gap: 14px; padding: 18px 5vw; }
       nav a { margin: 0 16px 0 0; }
@@ -209,6 +218,17 @@
 
     <div class="editor-grid">
       <form id="post-form">
+        <label for="post-select">Existing Posts</label>
+        <select id="post-select">
+          <option value="">New post</option>
+        </select>
+
+        <div class="controls">
+          <button type="button" id="load-post">Load Post</button>
+          <button type="button" id="save-post">Save / Update Site</button>
+          <button type="button" id="delete-post">Delete Post</button>
+        </div>
+
         <label for="title">Title</label>
         <input id="title" value="Against Passive Media" />
 
@@ -247,9 +267,10 @@
           <button type="button" id="download">Download Article HTML</button>
         </div>
         <p class="hint">
-          Browser security allows this editor to generate and download files. Existing archive/list pages
-          still need their generated snippets inserted into the HTML.
+          Open this page from the local admin server to save, update, load, or delete posts directly.
+          The download button is only a fallback for browser-only use.
         </p>
+        <p class="status" id="status" aria-live="polite"></p>
       </form>
 
       <div>
@@ -284,6 +305,7 @@
 
   <script>
     const fields = {
+      postSelect: document.querySelector("#post-select"),
       title: document.querySelector("#title"),
       slug: document.querySelector("#slug"),
       date: document.querySelector("#date"),
@@ -300,12 +322,13 @@
       recent: document.querySelector("#recent-output"),
       archive: document.querySelector("#archive-output")
     };
+    const status = document.querySelector("#status");
 
-    const escapeHtml = (value) => value
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;");
+    const escapeHtml = (value) => String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
 
     function slugify(value) {
       return value
@@ -339,6 +362,20 @@
         excerpt: fields.excerpt.value.trim(),
         paragraphs
       };
+    }
+
+    function setPost(post) {
+      fields.title.value = post.title || "";
+      fields.slug.value = post.slug || slugify(post.title || "");
+      fields.slug.dataset.touched = "true";
+      fields.date.value = post.date || "";
+      fields.readTime.value = post.readTime || "";
+      fields.category.value = post.category || "Essay";
+      fields.tags.value = Array.isArray(post.tags) ? post.tags.join(", ") : "";
+      fields.image.value = post.image || "";
+      fields.excerpt.value = post.excerpt || "";
+      fields.paragraphs.value = Array.isArray(post.paragraphs) ? post.paragraphs.join("\n\n") : "";
+      generate();
     }
 
     function buildArticle(post) {
@@ -406,6 +443,8 @@ ${paragraphs}
       outputs.article.value = buildArticle(post);
       outputs.recent.value = buildRecentEntry(post);
       outputs.archive.value = buildArchiveEntry(post);
+      const time = new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit", second: "2-digit" });
+      status.textContent = `Generated ${post.fileName} at ${time}`;
       return post;
     }
 
@@ -420,6 +459,88 @@ ${paragraphs}
       link.download = post.fileName;
       link.click();
       URL.revokeObjectURL(url);
+    });
+
+    async function api(path, options = {}) {
+      const response = await fetch(path, {
+        headers: { "Content-Type": "application/json" },
+        ...options
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || "Request failed.");
+      }
+      return data;
+    }
+
+    async function loadPostList() {
+      try {
+        const data = await api("/api/posts");
+        const currentSlug = fields.slug.value;
+        fields.postSelect.innerHTML = '<option value="">New post</option>';
+        data.posts.forEach((post) => {
+          const option = document.createElement("option");
+          option.value = post.slug;
+          option.textContent = post.title || post.slug;
+          fields.postSelect.append(option);
+        });
+        fields.postSelect.value = currentSlug && data.posts.some((post) => post.slug === currentSlug) ? currentSlug : "";
+        status.textContent = "Connected to local editor server.";
+      } catch (error) {
+        status.textContent = "File editing is offline. Run node admin-server.js and open http://localhost:4321/editor.html.";
+      }
+    }
+
+    document.querySelector("#load-post").addEventListener("click", async () => {
+      const slug = fields.postSelect.value || fields.slug.value;
+      if (!slug) {
+        status.textContent = "Choose a post to load.";
+        return;
+      }
+
+      try {
+        const data = await api(`/api/posts/${encodeURIComponent(slug)}`);
+        setPost(data.post);
+        status.textContent = `Loaded ${data.post.fileName}`;
+      } catch (error) {
+        status.textContent = error.message;
+      }
+    });
+
+    document.querySelector("#save-post").addEventListener("click", async () => {
+      try {
+        const post = generate();
+        const data = await api("/api/posts", {
+          method: "POST",
+          body: JSON.stringify(post)
+        });
+        fields.postSelect.value = data.post.slug;
+        await loadPostList();
+        status.textContent = data.message;
+      } catch (error) {
+        status.textContent = error.message;
+      }
+    });
+
+    document.querySelector("#delete-post").addEventListener("click", async () => {
+      const slug = fields.postSelect.value || fields.slug.value;
+      if (!slug) {
+        status.textContent = "Choose a post to delete.";
+        return;
+      }
+
+      if (!confirm(`Delete ${slug}.html and remove it from the readings pages?`)) {
+        return;
+      }
+
+      try {
+        const data = await api(`/api/posts/${encodeURIComponent(slug)}`, { method: "DELETE" });
+        fields.postSelect.value = "";
+        await loadPostList();
+        status.textContent = data.message;
+      } catch (error) {
+        status.textContent = error.message;
+      }
     });
 
     fields.title.addEventListener("input", () => {
@@ -437,7 +558,14 @@ ${paragraphs}
       field.addEventListener("change", generate);
     });
 
+    fields.postSelect.addEventListener("change", () => {
+      if (fields.postSelect.value) {
+        document.querySelector("#load-post").click();
+      }
+    });
+
     generate();
+    loadPostList();
   </script>
 </body>
 </html>
