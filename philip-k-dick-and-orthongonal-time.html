@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Philip K. Dick and Orthongonal Time | Alkaline</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 18% 58%, rgba(94, 10, 88, 0.5), transparent 29%),
+        radial-gradient(circle at 72% 28%, rgba(13, 24, 105, 0.54), transparent 31%),
+        linear-gradient(115deg, #080b15 0%, #050509 48%, #100316 100%);
+      color: #fff;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 22px 7vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      background: linear-gradient(to bottom, rgba(7, 7, 11, 0.88), rgba(7, 7, 11, 0));
+    }
+    nav h2 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+    nav h2::before {
+      content: "\1F736";
+      display: inline-block;
+      width: 1.15em;
+      margin-right: 9px;
+      font-size: 1.25rem;
+      line-height: 1;
+      text-align: center;
+      text-shadow: 0 0 18px rgba(216, 67, 201, 0.75);
+      vertical-align: -2px;
+    }
+    nav a {
+      color: rgba(255, 255, 255, 0.72);
+      text-decoration: none;
+      margin-left: 26px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    nav a:hover,
+    nav a.active { color: #fff; }
+    main {
+      min-height: 100vh;
+      padding: 150px 7vw 90px;
+    }
+    .article-shell {
+      max-width: 980px;
+    }
+    .label {
+      color: #97dcff;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 960px;
+      margin-top: 22px;
+      font-size: clamp(3.2rem, 8.8vw, 9rem);
+      line-height: 0.86;
+      text-transform: uppercase;
+      color: rgba(151, 220, 255, 0.18);
+      -webkit-text-fill-color: rgba(151, 220, 255, 0.18);
+      -webkit-text-stroke: 2px rgba(151, 220, 255, 0.94);
+      text-shadow: 0 20px 48px rgba(50, 148, 255, 0.3);
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+      color: rgba(255, 255, 255, 0.56);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .article-image {
+      display: block;
+      width: min(100%, 780px);
+      max-height: 420px;
+      margin-top: 44px;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #000;
+    }
+    .article-body {
+      max-width: 780px;
+      margin-top: 54px;
+      padding: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.055);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 26px 70px rgba(0, 0, 0, 0.34);
+    }
+    .article-body p {
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 1.06rem;
+      line-height: 1.82;
+    }
+    .article-body p + p {
+      margin-top: 24px;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      margin-top: 34px;
+      padding: 0 20px;
+      border: 1px solid rgba(151, 220, 255, 0.42);
+      background: rgba(151, 220, 255, 0.1);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .back-link:hover {
+      border-color: rgba(151, 220, 255, 0.82);
+      background: rgba(151, 220, 255, 0.18);
+    }
+    @media (max-width: 700px) {
+      nav { position: absolute; align-items: flex-start; flex-direction: column; gap: 14px; padding: 18px 5vw; }
+      nav a { margin: 0 16px 0 0; }
+      main { padding: 132px 5vw 64px; }
+      .article-body { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <h2><a href="index.html" style="color: inherit; text-decoration: none;">Alkaline</a></h2>
+    <div>
+      <a class="active" href="readings.html">Readings</a>
+      <a href="book-reviews.html">Book Reviews</a>
+      <a href="videos.html">Videos</a>
+      <a href="programs.html">Programs</a>
+    </div>
+  </nav>
+
+  <main>
+    <article class="article-shell">
+      <span class="label">Reading</span>
+      <h1>Philip K. Dick and Orthongonal Time</h1>
+      <div class="meta">
+        <span>May 2026</span>
+        <span>11 minute read</span>
+        <span>Media</span>
+        <span>Culture</span>
+        <span>Philosophy</span>
+        <span>Storytellint</span>
+      </div>
+        <img class="article-image" src="images/pdk.png" alt="Philip K. Dick and Orthongonal Time" />
+
+
+      <div class="article-body">
+        <p>“Fair, Worse, Good, Better”: A Misquote in Orthogonal Time</p>
+
+        <p>“Fair, worse, good, better.”</p>
+
+        <p>That is what I wrote down.</p>
+
+        <p>I was reading through Philip K. Dick’s 1977 Metz lecture, If You Find This World Bad, You Should See Some of the Others, and somewhere in my notes I had that phrase sitting there like a little radioactive pebble: “fair, worse, good, better.” It sounded right. Maybe that was the dangerous part. It had the crooked rhythm of Dick’s thinking. It did not move cleanly from bad to good. It stumbled. It improved, collapsed, recovered, then improved again. It felt less like a moral ladder and more like a broken elevator in a haunted building.</p>
+
+        <p>And because it sounded like Philip K. Dick, I accepted it for a while.</p>
+
+        <p>That is the first trap in writing about Dick. Some things feel true because they fit the atmosphere of his ideas. A phrase can be wrong historically and still somehow belong emotionally. “Fair, worse, good, better” sounds like a report from a reality that has been edited, not replaced. It sounds like someone trying to remember the order of worlds after the order has already been tampered with.</p>
+
+        <p>But later, checking the lecture again, I realized the problem.</p>
+
+        <p>Dick does not say “fair, worse, good, better.”</p>
+
+        <p>The sequence is not there. The phrase was either misread, misremembered, or accidentally created during the research process. The correct idea in the lecture is cleaner than my note made it seem. Dick speaks about movement between worlds in a way that suggests improvement from worse states toward better ones. But the scrambled phrase I had written down refused to leave the page. It became more interesting because it was wrong.</p>
+
+        <p>That is where the lecture itself started to fold back on the mistake.</p>
+
+        <p>In the Metz lecture, Dick discusses what he calls orthogonal time, or right-angle time. Ordinary time moves forward: past, present, future. One day replaces another. One historical condition produces the next. This is the usual line we believe we are walking on. But Dick asks us to imagine another direction of change, a sideways direction. Instead of time only moving forward, reality might also change laterally. The present might shift because some variable in the past has been altered.</p>
+
+        <p>That idea is strange enough on its own. But Dick makes it stranger by asking what would happen to memory.</p>
+
+        <p>If the past were changed, and the present changed with it, would we know? Would we remember the earlier version? Or would our memories be updated too, rewritten to match the current edition of the world?</p>
+
+        <p>This is where Dick’s painting metaphor becomes important.</p>
+
+        <p>He asks us to imagine a rich patron of the arts who has a painting hanging over his fireplace. Every day, his servants remove the old painting and replace it with a new one. That is ordinary linear time. One picture after another. Monday’s painting comes down, Tuesday’s painting goes up. We notice change because the whole picture is replaced.</p>
+
+        <p>But then Dick changes the metaphor.</p>
+
+        <p>Suppose the servants run out of new paintings. They cannot leave the same painting there, because the rule is that the picture must change. So instead of replacing it, they alter the painting already hanging on the wall. Maybe they change a figure in the background. Maybe they repaint the sky. Maybe they add a tree, remove a road, brighten a face, darken a doorway.</p>
+
+        <p>Now the question becomes uncomfortable: would the patron notice?</p>
+
+        <p>Maybe he would. Maybe he would stare at the painting and say, “Wasn’t there a horse there yesterday?” But maybe he would not. Maybe the altered painting would simply become the painting. Maybe his memory of yesterday’s version would quietly adjust. Maybe he would remember the new detail as if it had always been there.</p>
+
+        <p>That, to me, is the heart of Dick’s orthogonal time.</p>
+
+        <p>It is not only that reality changes. It is that the evidence of change may be changed along with it. History is not just replaced like a painting taken off the wall. It may be retouched while still hanging in front of us. And if memory is part of the picture, then memory can be repainted too.</p>
+
+        <p>This is why my mistaken phrase started to feel less like a simple error and more like a miniature example of the whole problem.</p>
+
+        <p>I had written: “fair, worse, good, better.”</p>
+
+        <p>Then I went back and found that Dick had not said it.</p>
+
+        <p>The responsible conclusion is obvious: I misquoted him. I wrote down the wrong thing. Research goblin struck again, stole one sock and three words.</p>
+
+        <p>But inside the logic of the lecture, the mistake becomes more interesting. What if a misquote is not just an error, but a kind of altered painting? What if the sentence I remembered was not the sentence in the lecture, but a sentence from the atmosphere around the lecture? A false detail that still reveals the shape of the idea?</p>
+
+        <p>This does not mean we should pretend Dick said something he did not say. The correction matters. It matters a lot. If we are writing honestly, we have to admit that the phrase “fair, worse, good, better” is not his wording.</p>
+
+        <p>But the mistake is useful because it performs the very anxiety Dick is describing. It puts the reader in the position of the patron looking at the painting and wondering whether something has changed. Was that detail always there? Did I invent it? Did I remember it from somewhere else? Did the world change, or did I?</p>
+
+        <p>Dick’s lecture gives philosophical weight to that eerie little uncertainty.</p>
+
+        <p>He talks about déjà vu, blocked memories, alternate worlds, and the possibility that historical variables are being adjusted. These changes, in his vision, would not necessarily appear to us as giant cosmic announcements. There would be no trumpet blast, no glowing message in the sky saying: REALITY HAS BEEN UPDATED. More likely, we would experience the change as a small mental snag. A strange memory. A phrase that seems familiar. A detail out of place. A feeling that yesterday’s painting was not quite the same.</p>
+
+        <p>The misquote works because it is unstable.</p>
+
+        <p>“Fair, worse, good, better” does not describe smooth progress. It describes interference. It begins in the middle, drops downward, rises again, and ends with improvement. It is not a straight line. It is not ordinary time. It feels orthogonal because it seems to move sideways through value. It has the texture of several worlds overlapping: one fair, one worse, one good, one better.</p>
+
+        <p>That is not what Dick said. But it is very close to the kind of confusion Dick wanted us to take seriously.</p>
+
+        <p>The lecture asks us to imagine that the world may be edited while we are inside it. The past may be altered, the present may shift, and our memories may be revised to fit the newest version. Yet perhaps the revision is imperfect. Perhaps fragments remain. Perhaps déjà vu is one of those fragments. Perhaps dreams are another. Perhaps certain mistakes carry the ghost of an earlier arrangement.</p>
+
+        <p>A misquote, then, can become a small haunted object.</p>
+
+        <p>Not proof. Not evidence of a changed universe. We do not need to go that far. But as a literary device, it is almost too perfect. The essay begins with a false memory, then reveals the falseness, and then uses that very falseness to approach Dick’s theory of changed worlds. The error becomes the doorway.</p>
+
+        <p>That is why I want to keep the phrase.</p>
+
+        <p>Not as a claim about what Dick said, but as a confession of what I thought I read. The personal mistake becomes part of the argument. I remembered a sentence that was not there. I wrote it down. I trusted it because it sounded right. Then the lecture itself taught me how strange that act of remembering really was.</p>
+
+        <p>In Dick’s painting metaphor, the altered image remains in the same frame. That is what makes it disturbing. The wall is the same. The fireplace is the same. The room is the same. Only the picture has changed, and perhaps only slightly. If we are not paying attention, the new version becomes the only version.</p>
+
+        <p>The same thing happens with memory.</p>
+
+        <p>A phrase appears in the mind. It feels original. It feels solid. It feels like something read rather than invented. Then research corrects it. The phrase was not there. But by then, the false phrase has already done its work. It has become part of the reader’s experience of the lecture.</p>
+
+        <p>So we begin with the mistake:</p>
+
+        <p>“Fair, worse, good, better.”</p>
+
+        <p>Then we reveal that it is not Dick’s wording.</p>
+
+        <p>And then, instead of throwing the mistake away, we hold it up like the retouched painting above the fireplace. We ask what changed. We ask what we remembered. We ask whether memory is a record of the world or one more surface on which the world can be repainted.</p>
+
+        <p>That is the tidy little horror of orthogonal time.</p>
+
+        <p>The painting changes.</p>
+
+        <p>The room remains familiar.</p>
+
+        <p>And for a moment, we are not sure whether we are looking at the world, a revision of the world, or only the place where our memory failed to keep up.</p>
+      </div>
+
+      <a class="back-link" href="readings.html">Back to Readings</a>
+    </article>
+  </main>
+</body>
+</html>
